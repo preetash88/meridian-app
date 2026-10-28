@@ -78,7 +78,7 @@ function Ring({ segments }: { segments: number }) {
 
 export function Commitments() {
   return (
-      <section aria-labelledby="commit-heading" className="relative isolate overflow-hidden bg-ink text-chalk">
+      <section aria-labelledby="commit-heading" className="relative isolate overflow-hidden bg-night text-paper">
         {/* Static glows behind the glass cards. No animation, so no repaint cost. */}
         <div
             aria-hidden="true"
@@ -92,7 +92,7 @@ export function Commitments() {
           <h2 id="commit-heading" className="max-w-2xl text-4xl font-semibold sm:text-5xl">
             What you can count on, in numbers we can keep.
           </h2>
-          <p className="mt-4 max-w-xl text-chalk/65">
+          <p className="mt-4 max-w-xl text-paper/65">
             Commitments, not claims. As Meridian grows, results from real placements will sit alongside them.
           </p>
 
@@ -106,7 +106,7 @@ export function Commitments() {
                 </span>
                   </div>
                   <p className="mt-6 font-display text-xl font-semibold">{it.label}</p>
-                  <p className="mt-2 max-w-[16rem] text-[0.95rem] text-chalk/65">{it.detail}</p>
+                  <p className="mt-2 max-w-[16rem] text-[0.95rem] text-paper/65">{it.detail}</p>
                 </li>
             ))}
           </ul>

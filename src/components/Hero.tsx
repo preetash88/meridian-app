@@ -157,7 +157,7 @@ export function Hero() {
                           initial={{ scale: 0 }}
                           animate={{ scale: 1 }}
                           transition={{ delay: 0.95 + i * 0.28, type: "spring", stiffness: 500, damping: 18 }}
-                          className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-verdigris text-white"
+                          className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-verdigris text-on-accent"
                       >
                         <Check className="h-3 w-3" strokeWidth={3} aria-hidden="true" />
                       </motion.span>

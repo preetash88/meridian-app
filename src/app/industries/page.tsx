@@ -21,7 +21,7 @@ export default function Industries() {
                         const Icon = ind.icon;
                         return (
                             <li key={ind.slug}>
-                                <Link href={`/get-started?type=employer&industry=${ind.slug}`} className="glass group flex h-full flex-col rounded-card p-7 transition-all duration-300 hover:-translate-y-1 hover:bg-white/80">
+                                <Link href={`/get-started?type=employer&industry=${ind.slug}`} className="glass group flex h-full flex-col rounded-card p-7 transition-all duration-300 hover:-translate-y-1 hover:bg-surface/80">
                                     <span className="grid h-12 w-12 place-items-center rounded-tile bg-sage text-verdigris"><Icon className="h-6 w-6" aria-hidden="true" /></span>
                                     <h2 className="mt-6 text-2xl font-semibold">{ind.name}</h2>
                                     <p className="mt-2 flex-1 text-slate">{ind.roles}</p>

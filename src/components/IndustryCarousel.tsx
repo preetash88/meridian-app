@@ -23,10 +23,10 @@ export function IndustryCarousel() {
             <p className="mt-4 max-w-xl text-lg text-slate">Whatever the sector, the process and the standard of checking stay the same.</p>
           </Reveal>
           <div className="flex gap-2">
-            <button type="button" onClick={() => scrollBy(-1)} aria-label="Previous industries" className="glass grid h-11 w-11 place-items-center rounded-full transition-all hover:-translate-y-0.5 hover:bg-white/80">
+            <button type="button" onClick={() => scrollBy(-1)} aria-label="Previous industries" className="glass grid h-11 w-11 place-items-center rounded-full transition-all hover:-translate-y-0.5 hover:bg-surface/80">
               <ArrowLeft className="h-5 w-5" aria-hidden="true" />
             </button>
-            <button type="button" onClick={() => scrollBy(1)} aria-label="Next industries" className="glass grid h-11 w-11 place-items-center rounded-full transition-all hover:-translate-y-0.5 hover:bg-white/80">
+            <button type="button" onClick={() => scrollBy(1)} aria-label="Next industries" className="glass grid h-11 w-11 place-items-center rounded-full transition-all hover:-translate-y-0.5 hover:bg-surface/80">
               <ArrowRight className="h-5 w-5" aria-hidden="true" />
             </button>
           </div>

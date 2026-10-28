@@ -9,8 +9,8 @@ function VisualChecks() {
   return (
       <ul className="space-y-3">
         {CHECKS.map((c) => (
-            <li key={c} className="flex items-center gap-3 rounded-tile border border-white/80 bg-white/70 px-4 py-3 text-[0.95rem]">
-          <span className="grid h-5 w-5 place-items-center rounded-full bg-verdigris text-white">
+            <li key={c} className="flex items-center gap-3 rounded-tile border border-surface-line bg-surface/70 px-4 py-3 text-[0.95rem]">
+          <span className="grid h-5 w-5 place-items-center rounded-full bg-verdigris text-on-accent">
             <Check className="h-3 w-3" strokeWidth={3} aria-hidden="true" />
           </span>
               {c}
@@ -34,7 +34,7 @@ function VisualOneContact() {
         ))}
         <circle cx="262" cy="160" r="38" fill="var(--color-verdigris)" />
         <circle cx="262" cy="160" r="38" fill="none" stroke="var(--color-verdigris)" strokeOpacity="0.25" strokeWidth="12" />
-        <text x="262" y="166" textAnchor="middle" fontSize="15" fontWeight="600" fill="#fff" fontFamily="var(--font-display)">You</text>
+        <text x="262" y="166" textAnchor="middle" fontSize="15" fontWeight="600" fill="var(--color-on-accent)" fontFamily="var(--font-display)">You</text>
       </svg>
   );
 }
@@ -47,7 +47,7 @@ function VisualFit() {
     ["Motivation", 80],
   ] as const;
   return (
-      <div className="space-y-5 rounded-card border border-white/80 bg-white/70 p-6">
+      <div className="space-y-5 rounded-card border border-surface-line bg-surface/70 p-6">
         <div>
           <p className="font-display text-lg font-semibold">Role-fit assessment</p>
           <p className="text-sm text-slate">Illustrative example</p>

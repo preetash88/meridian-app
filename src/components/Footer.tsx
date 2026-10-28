@@ -5,15 +5,15 @@ import { NAV_LINKS, SITE } from "@/lib/site";
 
 export function Footer() {
   return (
-      <footer className="bg-ink text-chalk/80">
+      <footer className="bg-night text-paper/80">
         <div className="mx-auto grid max-w-(--container-page) gap-12 px-5 py-16 sm:px-8 md:grid-cols-[1.4fr_1fr_1fr_1.3fr]">
           <div>
             <Logo light />
-            <p className="mt-5 max-w-xs text-[0.95rem] leading-relaxed text-chalk/65">{SITE.tagline}</p>
+            <p className="mt-5 max-w-xs text-[0.95rem] leading-relaxed text-paper/65">{SITE.tagline}</p>
           </div>
 
           <nav aria-label="Footer">
-            <h2 className="font-display text-base font-semibold text-chalk">Explore</h2>
+            <h2 className="font-display text-base font-semibold text-paper">Explore</h2>
             <ul className="mt-4 space-y-3 text-[0.95rem]">
               {NAV_LINKS.map((l) => (
                   <li key={l.href}>
@@ -24,7 +24,7 @@ export function Footer() {
           </nav>
 
           <div>
-            <h2 className="font-display text-base font-semibold text-chalk">Start here</h2>
+            <h2 className="font-display text-base font-semibold text-paper">Start here</h2>
             <ul className="mt-4 space-y-3 text-[0.95rem]">
               <li><Link href="/get-started?type=employer" className="hover:text-white">I'm hiring</Link></li>
               <li><Link href="/get-started?type=candidate" className="hover:text-white">I'm looking for work</Link></li>
@@ -33,8 +33,8 @@ export function Footer() {
           </div>
 
           <div className="glass-dark rounded-tile p-6">
-            <h2 className="font-display text-base font-semibold text-chalk">Talk to us</h2>
-            <p className="mt-2 text-[0.9rem] text-chalk/65">We reply to every enquiry within {SITE.responseTime}.</p>
+            <h2 className="font-display text-base font-semibold text-paper">Talk to us</h2>
+            <p className="mt-2 text-[0.9rem] text-paper/65">We reply to every enquiry within {SITE.responseTime}.</p>
             <ul className="mt-4 space-y-2.5 text-[0.95rem]">
               <li className="flex items-center gap-2.5">
                 <Mail className="h-4 w-4 text-verdigris-bright" aria-hidden="true" />
@@ -50,8 +50,8 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-chalk/10">
-          <div className="mx-auto flex max-w-(--container-page) flex-wrap items-center justify-between gap-2 px-5 py-6 text-sm text-chalk/50 sm:px-8">
+        <div className="border-t border-paper/10">
+          <div className="mx-auto flex max-w-(--container-page) flex-wrap items-center justify-between gap-2 px-5 py-6 text-sm text-paper/50 sm:px-8">
             <p>&copy; {new Date().getFullYear()} {SITE.name}. All rights reserved.</p>
           </div>
         </div>

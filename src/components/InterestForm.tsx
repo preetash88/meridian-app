@@ -12,7 +12,7 @@ type Kind = "employer" | "candidate";
 const initial: FormState = { status: "idle" };
 
 const inputCls =
-    "mt-1.5 w-full rounded-xl border border-line bg-white px-4 py-3 text-[1rem] text-ink placeholder:text-slate/60 transition-colors focus:border-verdigris aria-[invalid=true]:border-red-700";
+    "mt-1.5 w-full rounded-xl border border-line bg-surface px-4 py-3 text-[1rem] text-ink placeholder:text-slate/60 transition-colors focus:border-verdigris aria-[invalid=true]:border-red-700";
 
 function Field({
                    label, name, type = "text", required, placeholder, error, defaultValue, autoComplete, hint,
@@ -33,7 +33,7 @@ function Field({
                 className={inputCls}
             />
             {hint && !error && <p id={`${name}-hint`} className="mt-1 text-sm text-slate">{hint}</p>}
-            {error && <p id={`${name}-err`} className="mt-1 text-sm text-red-700">{error}</p>}
+            {error && <p id={`${name}-err`} className="mt-1 text-sm text-red-700 dark:text-red-300">{error}</p>}
         </div>
     );
 }
@@ -52,7 +52,7 @@ function Select({
                 <option value="" disabled>Select one</option>
                 {options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
             </select>
-            {error && <p id={`${name}-err`} className="mt-1 text-sm text-red-700">{error}</p>}
+            {error && <p id={`${name}-err`} className="mt-1 text-sm text-red-700 dark:text-red-300">{error}</p>}
         </div>
     );
 }
@@ -77,7 +77,7 @@ export function InterestForm({ initialType, initialIndustry }: { initialType: Ki
 
     return (
         <div className="glass-strong rounded-card p-6 sm:p-10">
-            <div role="radiogroup" aria-label="I am" className="grid grid-cols-2 gap-1 rounded-full border border-white/70 bg-white/50 p-1">
+            <div role="radiogroup" aria-label="I am" className="grid grid-cols-2 gap-1 rounded-full border border-surface-line bg-surface/50 p-1">
                 {([["employer", "I'm hiring"], ["candidate", "I'm looking for work"]] as const).map(([k, label]) => (
                     <button
                         key={k} type="button" role="radio" aria-checked={kind === k} onClick={() => setKind(k)}
@@ -96,7 +96,7 @@ export function InterestForm({ initialType, initialIndustry }: { initialType: Ki
                 </div>
 
                 {state.status === "error" && state.message && (
-                    <p role="alert" className="rounded-xl border border-red-700/30 bg-red-50 px-4 py-3 text-sm text-red-800">{state.message}</p>
+                    <p role="alert" className="rounded-xl border border-red-700/30 bg-red-50 px-4 py-3 text-sm text-red-800 dark:border-red-400/30 dark:bg-red-950/50 dark:text-red-200">{state.message}</p>
                 )}
 
                 <div className="grid gap-5 sm:grid-cols-2">
@@ -136,7 +136,7 @@ export function InterestForm({ initialType, initialIndustry }: { initialType: Ki
                         <input type="checkbox" name="consent" required defaultChecked={v.consent === "on"} aria-invalid={e.consent ? true : undefined} className="mt-1 h-4 w-4 accent-[var(--color-verdigris)]" />
                         <span>I agree to {SITE.shortName} collecting my details to respond to this enquiry, as described in the <Link href="/privacy" className="underline underline-offset-2">privacy policy</Link>.</span>
                     </label>
-                    {e.consent && <p className="mt-1 text-sm text-red-700">{e.consent}</p>}
+                    {e.consent && <p className="mt-1 text-sm text-red-700 dark:text-red-300">{e.consent}</p>}
                 </div>
 
                 <button

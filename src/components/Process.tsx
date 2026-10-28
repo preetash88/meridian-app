@@ -70,7 +70,7 @@ export function Process({ heading = "How it works", initial = "employer", showTa
                   transition={{ duration: 0.55, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
                   className="relative"
               >
-            <span className="relative z-10 grid h-11 w-11 place-items-center rounded-full bg-ink font-display text-lg font-semibold text-chalk shadow-[0_0_0_6px_rgba(255,255,255,0.55)]">
+            <span className="relative z-10 grid h-11 w-11 place-items-center rounded-full bg-ink font-display text-lg font-semibold text-chalk shadow-[0_0_0_6px_var(--halo)]">
               {i + 1}
             </span>
                 {i < current.steps.length - 1 && (

@@ -1,8 +1,11 @@
 import { z } from "zod";
 
 const text = (max: number) => z.string().trim().max(max);
+// The { error } on z.string() covers a field that is missing entirely. An unselected
+// <select> with a disabled placeholder is not submitted at all, so without it the
+// visitor would see zod's raw "expected string, received undefined" message.
 const required = (max: number, msg = "This field is required.") =>
-  z.string().trim().min(1, msg).max(max, `Keep this under ${max} characters.`);
+    z.string({ error: msg }).trim().min(1, msg).max(max, `Keep this under ${max} characters.`);
 
 const base = {
   name: required(120, "Enter your name."),
