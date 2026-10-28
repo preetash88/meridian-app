@@ -1,0 +1,213 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-chalk: #f3f5f3;
+  --color-linen: #fbfcfb;
+  --color-ink: #0d2733;
+  --color-ink-soft: #14384a;
+  --color-slate: #4a5d69;
+  --color-line: #d8ddd9;
+  --color-verdigris: #1f6f64;
+  --color-verdigris-bright: #4cc0a8;
+  --color-mist: #e3e1f4;
+  --color-sage: #d9eadf;
+
+  --font-display: var(--f-display), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--f-body), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 1.5rem;
+  --radius-tile: 1rem;
+  --container-page: 76rem;
+}
+
+@layer base {
+  html {
+    background: var(--color-chalk);
+    color: var(--color-ink);
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  :focus-visible {
+    outline: 2px solid var(--color-verdigris);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  ::selection { background: var(--color-verdigris); color: #fff; }
+}
+
+/* Aurora: one fixed layer behind the whole site. Blobs animate with transform only,
+   so the work stays on the GPU compositor. */
+.aurora {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  contain: strict;
+}
+.aurora-blob {
+  position: absolute;
+  border-radius: 9999px;
+  will-change: transform;
+}
+.aurora-blob.a {
+  width: 62rem; height: 62rem; top: -26rem; right: -18rem;
+  background: radial-gradient(closest-side, rgba(190, 184, 240, 0.75), transparent);
+  animation: drift-a 28s ease-in-out infinite alternate;
+}
+.aurora-blob.b {
+  width: 56rem; height: 56rem; bottom: -24rem; left: -16rem;
+  background: radial-gradient(closest-side, rgba(168, 222, 196, 0.8), transparent);
+  animation: drift-b 34s ease-in-out infinite alternate;
+}
+.aurora-blob.c {
+  width: 40rem; height: 40rem; top: 38%; left: 42%;
+  background: radial-gradient(closest-side, rgba(150, 205, 230, 0.55), transparent);
+  animation: drift-c 40s ease-in-out infinite alternate;
+}
+@keyframes drift-a { to { transform: translate3d(-9rem, 7rem, 0) scale(1.12); } }
+@keyframes drift-b { to { transform: translate3d(10rem, -6rem, 0) scale(1.08); } }
+@keyframes drift-c { to { transform: translate3d(-8rem, 8rem, 0) scale(0.9); } }
+
+/* Faint dot grid, masked so it fades out. Pure CSS, no image. */
+.dot-grid {
+  background-image: radial-gradient(rgba(13, 39, 51, 0.16) 1px, transparent 1.2px);
+  background-size: 26px 26px;
+  -webkit-mask-image: radial-gradient(ellipse at 70% 30%, #000 0%, transparent 70%);
+  mask-image: radial-gradient(ellipse at 70% 30%, #000 0%, transparent 70%);
+}
+
+/* Glass */
+.glass {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0.42));
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.95),
+          0 1px 2px rgba(13, 39, 51, 0.05),
+          0 24px 48px -24px rgba(13, 39, 51, 0.28);
+}
+.glass-strong {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.66));
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow:
+          inset 0 1px 0 #fff,
+          0 30px 60px -28px rgba(13, 39, 51, 0.4);
+}
+.glass-dark {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+/* Real backdrop blur is the most expensive effect on the page, and it only changes
+   anything when content passes behind a surface. So .glass looks frosted using
+   translucency and highlights alone, and .frost adds true blur on the few surfaces
+   that need it: the header, the hero card and chips, the mobile menu. */
+.frost {
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .frost { background: rgba(255, 255, 255, 0.94) !important; }
+}
+
+/* Cursor-following spotlight. Vars are set from JS without re-rendering. */
+.spotlight { position: relative; isolation: isolate; }
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(76, 192, 168, 0.22), transparent 60%);
+}
+@media (hover: hover) {
+  .spotlight:hover::before { opacity: 1; }
+}
+
+/* Animated gradient border for the closing call to action */
+@property --angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+.beam::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(from var(--angle), transparent 0 72%, var(--color-verdigris-bright) 88%, transparent 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: beam-spin 7s linear infinite;
+  pointer-events: none;
+}
+@keyframes beam-spin { to { --angle: 360deg; } }
+
+/* Button sheen on hover */
+.btn-sheen { position: relative; overflow: hidden; isolation: isolate; }
+.btn-sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: translateX(-120%) skewX(-18deg);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  transition: transform 0.7s ease;
+}
+.btn-sheen:hover::after { transform: translateX(120%) skewX(-18deg); }
+
+/* Gentle floating for decorative chips */
+@keyframes float-y { 0%, 100% { transform: translate3d(0, 0, 0); } 50% { transform: translate3d(0, -10px, 0); } }
+.float-y { animation: float-y 6s ease-in-out infinite; }
+
+/* Marquee */
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.marquee-track { animation: marquee 48s linear infinite; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+
+/* Skip painting work for sections that are far off screen */
+.defer { content-visibility: auto; contain-intrinsic-size: auto 700px; }
+
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+.carousel-pad { padding-inline: 1.25rem; scroll-padding-inline: 1.25rem; }
+@media (min-width: 40rem) { .carousel-pad { padding-inline: 2rem; scroll-padding-inline: 2rem; } }
+@media (min-width: 80rem) {
+  .carousel-pad {
+    padding-inline: calc((100vw - 76rem) / 2 + 2rem);
+    scroll-padding-inline: calc((100vw - 76rem) / 2 + 2rem);
+  }
+}
+
+/* Phones: lighter blur and a calmer aurora, to protect battery and frame rate */
+@media (max-width: 767px) {
+  .frost {
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+  .aurora-blob.c { display: none; }
+  .aurora-blob.a, .aurora-blob.b { animation-duration: 60s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .aurora-blob, .marquee-track, .float-y, .beam::after { animation: none; }
+  .btn-sheen::after { transition: none; }
+}
