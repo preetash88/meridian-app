@@ -1,16 +1,103 @@
 @import "tailwindcss";
 
+/* Class-based dark mode: <html class="dark"> */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+  Colours are semantic variables that swap per theme. "ink" is the main text colour and
+  "chalk" the page colour, so they invert in dark mode. "night" and "paper" never swap:
+  they are for surfaces that are dark (or light) in both themes, like the stats band,
+  closing banner and footer.
+*/
+:root {
+  --c-chalk: #f3f5f3;
+  --c-linen: #fbfcfb;
+  --c-ink: #0d2733;
+  --c-ink-soft: #14384a;
+  --c-slate: #4a5d69;
+  --c-line: #d8ddd9;
+  --c-verdigris: #1f6f64;
+  --c-verdigris-bright: #4cc0a8;
+  --c-mist: #e3e1f4;
+  --c-sage: #d9eadf;
+  --c-surface: #ffffff;
+  --c-surface-line: rgba(255, 255, 255, 0.8);
+  --c-on-accent: #ffffff;
+  --c-night: #0d2733;
+  --c-paper: #f3f5f3;
+
+  --glass-a: rgba(255, 255, 255, 0.74);
+  --glass-b: rgba(255, 255, 255, 0.42);
+  --glass-border: rgba(255, 255, 255, 0.7);
+  --glass-hi: rgba(255, 255, 255, 0.95);
+  --glass-shadow: rgba(13, 39, 51, 0.28);
+  --glass-shadow-soft: rgba(13, 39, 51, 0.05);
+  --glass2-a: rgba(255, 255, 255, 0.9);
+  --glass2-b: rgba(255, 255, 255, 0.66);
+  --glass2-border: rgba(255, 255, 255, 0.85);
+  --glass2-hi: #ffffff;
+  --glass2-shadow: rgba(13, 39, 51, 0.4);
+  --glass-fallback: rgba(255, 255, 255, 0.94);
+  --halo: rgba(255, 255, 255, 0.55);
+  --dot: rgba(13, 39, 51, 0.16);
+  --aurora-a: rgba(190, 184, 240, 0.75);
+  --aurora-b: rgba(168, 222, 196, 0.8);
+  --aurora-c: rgba(150, 205, 230, 0.55);
+  color-scheme: light;
+}
+
+.dark {
+  --c-chalk: #08171f;
+  --c-linen: #0d212c;
+  --c-ink: #e8f1ee;
+  --c-ink-soft: #c6d8d2;
+  --c-slate: #9db2bd;
+  --c-line: #1f3a47;
+  --c-verdigris: #4cc0a8;
+  --c-verdigris-bright: #6fd8c1;
+  --c-mist: #2a2752;
+  --c-sage: #123a35;
+  --c-surface: #15303c;
+  --c-surface-line: rgba(255, 255, 255, 0.12);
+  --c-on-accent: #04211b;
+  --c-night: #0b2230;
+
+  --glass-a: rgba(255, 255, 255, 0.085);
+  --glass-b: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.11);
+  --glass-hi: rgba(255, 255, 255, 0.12);
+  --glass-shadow: rgba(0, 0, 0, 0.55);
+  --glass-shadow-soft: rgba(0, 0, 0, 0.3);
+  --glass2-a: rgba(255, 255, 255, 0.16);
+  --glass2-b: rgba(255, 255, 255, 0.07);
+  --glass2-border: rgba(255, 255, 255, 0.16);
+  --glass2-hi: rgba(255, 255, 255, 0.18);
+  --glass2-shadow: rgba(0, 0, 0, 0.6);
+  --glass-fallback: rgba(16, 38, 50, 0.96);
+  --halo: rgba(255, 255, 255, 0.08);
+  --dot: rgba(255, 255, 255, 0.12);
+  --aurora-a: rgba(94, 76, 210, 0.42);
+  --aurora-b: rgba(24, 150, 122, 0.34);
+  --aurora-c: rgba(34, 110, 170, 0.3);
+  color-scheme: dark;
+}
+
 @theme inline {
-  --color-chalk: #f3f5f3;
-  --color-linen: #fbfcfb;
-  --color-ink: #0d2733;
-  --color-ink-soft: #14384a;
-  --color-slate: #4a5d69;
-  --color-line: #d8ddd9;
-  --color-verdigris: #1f6f64;
-  --color-verdigris-bright: #4cc0a8;
-  --color-mist: #e3e1f4;
-  --color-sage: #d9eadf;
+  --color-chalk: var(--c-chalk);
+  --color-linen: var(--c-linen);
+  --color-ink: var(--c-ink);
+  --color-ink-soft: var(--c-ink-soft);
+  --color-slate: var(--c-slate);
+  --color-line: var(--c-line);
+  --color-verdigris: var(--c-verdigris);
+  --color-verdigris-bright: var(--c-verdigris-bright);
+  --color-mist: var(--c-mist);
+  --color-sage: var(--c-sage);
+  --color-surface: var(--c-surface);
+  --color-surface-line: var(--c-surface-line);
+  --color-on-accent: var(--c-on-accent);
+  --color-night: var(--c-night);
+  --color-paper: var(--c-paper);
 
   --font-display: var(--f-display), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--f-body), ui-sans-serif, system-ui, sans-serif;
@@ -67,17 +154,17 @@
 }
 .aurora-blob.a {
   width: 62rem; height: 62rem; top: -26rem; right: -18rem;
-  background: radial-gradient(closest-side, rgba(190, 184, 240, 0.75), transparent);
+  background: radial-gradient(closest-side, var(--aurora-a), transparent);
   animation: drift-a 28s ease-in-out infinite alternate;
 }
 .aurora-blob.b {
   width: 56rem; height: 56rem; bottom: -24rem; left: -16rem;
-  background: radial-gradient(closest-side, rgba(168, 222, 196, 0.8), transparent);
+  background: radial-gradient(closest-side, var(--aurora-b), transparent);
   animation: drift-b 34s ease-in-out infinite alternate;
 }
 .aurora-blob.c {
   width: 40rem; height: 40rem; top: 38%; left: 42%;
-  background: radial-gradient(closest-side, rgba(150, 205, 230, 0.55), transparent);
+  background: radial-gradient(closest-side, var(--aurora-c), transparent);
   animation: drift-c 40s ease-in-out infinite alternate;
 }
 @keyframes drift-a { to { transform: translate3d(-9rem, 7rem, 0) scale(1.12); } }
@@ -86,7 +173,7 @@
 
 /* Faint dot grid, masked so it fades out. Pure CSS, no image. */
 .dot-grid {
-  background-image: radial-gradient(rgba(13, 39, 51, 0.16) 1px, transparent 1.2px);
+  background-image: radial-gradient(var(--dot) 1px, transparent 1.2px);
   background-size: 26px 26px;
   -webkit-mask-image: radial-gradient(ellipse at 70% 30%, #000 0%, transparent 70%);
   mask-image: radial-gradient(ellipse at 70% 30%, #000 0%, transparent 70%);
@@ -94,19 +181,19 @@
 
 /* Glass */
 .glass {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0.42));
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: linear-gradient(145deg, var(--glass-a), var(--glass-b));
+  border: 1px solid var(--glass-border);
   box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.95),
-          0 1px 2px rgba(13, 39, 51, 0.05),
-          0 24px 48px -24px rgba(13, 39, 51, 0.28);
+          inset 0 1px 0 var(--glass-hi),
+          0 1px 2px var(--glass-shadow-soft),
+          0 24px 48px -24px var(--glass-shadow);
 }
 .glass-strong {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.66));
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: linear-gradient(145deg, var(--glass2-a), var(--glass2-b));
+  border: 1px solid var(--glass2-border);
   box-shadow:
-          inset 0 1px 0 #fff,
-          0 30px 60px -28px rgba(13, 39, 51, 0.4);
+          inset 0 1px 0 var(--glass2-hi),
+          0 30px 60px -28px var(--glass2-shadow);
 }
 .glass-dark {
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
@@ -123,7 +210,7 @@
   backdrop-filter: blur(10px);
 }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .frost { background: rgba(255, 255, 255, 0.94) !important; }
+  .frost { background: var(--glass-fallback) !important; }
 }
 
 /* Cursor-following spotlight. Vars are set from JS without re-rendering. */
@@ -210,4 +297,9 @@
   html { scroll-behavior: auto; }
   .aurora-blob, .marquee-track, .float-y, .beam::after { animation: none; }
   .btn-sheen::after { transition: none; }
+}
+/* Theme switch: a quick cross-fade where the View Transitions API exists, instant elsewhere */
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.35s; }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
 }

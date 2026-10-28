@@ -17,7 +17,7 @@ export function Logo({ light = false }: { light?: boolean }) {
     <Link
       href="/"
       aria-label={`${SITE.name} home`}
-      className={`inline-flex items-center gap-2.5 ${light ? "text-chalk" : "text-ink"}`}
+      className={`inline-flex items-center gap-2.5 ${light ? "text-paper" : "text-ink"}`}
     >
       <LogoMark />
       <span className="font-display text-[1.35rem] font-semibold tracking-tight">{SITE.shortName}</span>

@@ -1,6 +1,6 @@
 /** Decorative globe wireframe. The brand motif: lines of longitude and latitude. */
 export function MeridianArcs({ className = "", tone = "dark" }: { className?: string; tone?: "dark" | "light" }) {
-  const stroke = tone === "dark" ? "var(--color-ink)" : "var(--color-chalk)";
+  const stroke = tone === "dark" ? "var(--color-ink)" : "var(--color-paper)";
   const meridians = [70, 140, 205];
   const parallels = [-175, -110, -45, 45, 110, 175];
   return (

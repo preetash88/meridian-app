@@ -32,7 +32,7 @@ export default function Employers() {
                 <ul className="space-y-3">
                     {CHECKS.map((c) => (
                         <li key={c} className="flex items-center gap-3 glass rounded-tile px-5 py-4">
-                            <span className="grid h-6 w-6 place-items-center rounded-full bg-verdigris text-white"><Check className="h-3.5 w-3.5" strokeWidth={3} aria-hidden="true" /></span>
+                            <span className="grid h-6 w-6 place-items-center rounded-full bg-verdigris text-on-accent"><Check className="h-3.5 w-3.5" strokeWidth={3} aria-hidden="true" /></span>
                             {c}
                         </li>
                     ))}
