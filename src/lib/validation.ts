@@ -1,9 +1,6 @@
 import { z } from "zod";
 
 const text = (max: number) => z.string().trim().max(max);
-// The { error } on z.string() covers a field that is missing entirely. An unselected
-// <select> with a disabled placeholder is not submitted at all, so without it the
-// visitor would see zod's raw "expected string, received undefined" message.
 const required = (max: number, msg = "This field is required.") =>
     z.string({ error: msg }).trim().min(1, msg).max(max, `Keep this under ${max} characters.`);
 
@@ -13,8 +10,13 @@ const base = {
   phone: text(40).optional(),
   message: text(2000).optional(),
   consent: z.literal("on", { error: "Please agree to the privacy policy to continue." }),
-  // Honeypot: real people never fill this in.
   website: text(200).max(0).optional(),
+};
+
+const location = {
+  country: required(80, "Choose a country."),
+  state: required(80, "Choose a state or region."),
+  city: required(120, "Enter the city or suburb."),
 };
 
 export const employerSchema = z.object({
@@ -22,7 +24,7 @@ export const employerSchema = z.object({
   company: required(160, "Enter your company name."),
   role: required(160, "Tell us which role you are hiring for."),
   industry: required(80, "Choose an industry."),
-  city: required(120, "Enter the city or region."),
+  ...location,
   timing: required(40, "Choose a timeframe."),
   ...base,
 });
@@ -31,7 +33,7 @@ export const candidateSchema = z.object({
   type: z.literal("candidate"),
   role: required(160, "Tell us which role you are after."),
   industry: required(80, "Choose an industry."),
-  city: required(120, "Enter your city."),
+  ...location,
   linkedin: text(300).optional(),
   ...base,
 });
