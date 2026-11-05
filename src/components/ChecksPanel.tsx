@@ -14,13 +14,13 @@ const TILES = [
 
 export function ChecksPanel() {
     return (
-        <Panel labelledBy="checks-heading">
-            <div className="mx-auto max-w-(--container-page) px-6 py-20 sm:px-10 lg:py-28">
+        <Panel labelledBy="checks-heading" tint>
+            <div className="mx-auto max-w-(--container-page) px-5 py-20 sm:px-8 lg:py-28">
                 <Reveal>
                     <h2 id="checks-heading" className="text-fade max-w-2xl text-4xl font-medium tracking-[-0.03em] sm:text-5xl">
                         Five checks before any introduction.
                     </h2>
-                    <p className="mt-4 max-w-xl text-[1.02rem] text-paper/65">
+                    <p className="mt-4 max-w-xl text-[1.02rem] text-ink/65">
                         You spend interview time on people who have already cleared the basics, in every industry we cover.
                     </p>
                 </Reveal>
@@ -30,16 +30,16 @@ export function ChecksPanel() {
                         const Icon = t.icon;
                         return (
                             <Reveal key={t.title} delay={i * 0.07} className={clsx(t.span)}>
-                                <SpotlightCard dark className="group relative h-full overflow-hidden p-7 text-paper">
+                                <SpotlightCard className="group relative h-full overflow-hidden p-7 text-ink">
                                     <Icon
-                                        className="pointer-events-none absolute -bottom-6 -right-6 h-36 w-36 text-paper/[0.04] transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6"
+                                        className="pointer-events-none absolute -bottom-6 -right-6 h-36 w-36 text-ink/[0.05] transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6"
                                         aria-hidden="true"
                                     />
-                                    <span className="grid h-12 w-12 place-items-center rounded-2xl bg-verdigris-bright/15 text-verdigris-bright">
+                                    <span className="grid h-12 w-12 place-items-center rounded-2xl bg-verdigris/15 text-verdigris">
                     <Icon className="h-6 w-6" aria-hidden="true" />
                   </span>
                                     <h3 className="relative mt-6 text-xl font-semibold">{t.title}</h3>
-                                    <p className="relative mt-2 max-w-sm text-[0.95rem] text-paper/65">{t.body}</p>
+                                    <p className="relative mt-2 max-w-sm text-[0.95rem] text-ink/65">{t.body}</p>
                                 </SpotlightCard>
                             </Reveal>
                         );

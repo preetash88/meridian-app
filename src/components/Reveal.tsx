@@ -7,7 +7,7 @@ import type { ReactNode } from "react";
 export function Reveal({
                            children,
                            delay = 0,
-                           y = 22,
+                           y = 14,
                            className,
                            as = "div",
                        }: {
@@ -22,8 +22,8 @@ export function Reveal({
         <Tag
             initial={{ opacity: 0, y }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-70px" }}
-            transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.45, delay, ease: [0.2, 0.8, 0.2, 1] }}
             className={className}
         >
             {children}

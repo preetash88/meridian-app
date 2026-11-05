@@ -32,15 +32,15 @@ export function Process({ heading = "How it works", initial = "employer", showTa
   const current = FLOWS[flow];
 
   return (
-      <Panel labelledBy="process-heading">
-        <div className="mx-auto max-w-(--container-page) px-6 py-20 sm:px-10 lg:py-28">
+      <Panel labelledBy="process-heading" tint>
+        <div className="mx-auto max-w-(--container-page) px-5 py-20 sm:px-8 lg:py-28">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <h2 id="process-heading" className="text-fade text-4xl font-medium tracking-[-0.03em] sm:text-5xl">
               {heading}
             </h2>
 
             {showTabs && (
-                <div role="tablist" aria-label="Choose a path" className="glass-dark relative inline-flex rounded-full p-1">
+                <div role="tablist" aria-label="Choose a path" className="glass relative inline-flex rounded-full p-1">
                   {(Object.keys(FLOWS) as FlowKey[]).map((k) => (
                       <button
                           key={k}
@@ -51,11 +51,11 @@ export function Process({ heading = "How it works", initial = "employer", showTa
                           onClick={() => setFlow(k)}
                           className={clsx(
                               "relative z-10 rounded-full px-5 py-2 text-[0.95rem] font-medium transition-colors",
-                              flow === k ? "text-night" : "text-paper/70 hover:text-paper",
+                              flow === k ? "text-chalk" : "text-slate hover:text-ink",
                           )}
                       >
                         {flow === k && (
-                            <motion.span layoutId="process-pill" className="absolute inset-0 -z-10 rounded-full bg-paper" transition={{ type: "spring", stiffness: 420, damping: 36 }} />
+                            <motion.span layoutId="process-pill" className="absolute inset-0 -z-10 rounded-full bg-ink" transition={{ type: "spring", stiffness: 420, damping: 36 }} />
                         )}
                         {FLOWS[k].label}
                       </button>
@@ -74,7 +74,7 @@ export function Process({ heading = "How it works", initial = "employer", showTa
                     transition={{ duration: 0.55, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
                     className="relative"
                 >
-              <span className="relative z-10 grid h-11 w-11 place-items-center rounded-full bg-paper font-display text-lg font-semibold text-night shadow-[0_0_0_6px_rgba(255,255,255,0.08)]">
+              <span className="relative z-10 grid h-11 w-11 place-items-center rounded-full bg-ink font-display text-lg font-semibold text-chalk shadow-[0_0_0_6px_var(--halo)]">
                 {i + 1}
               </span>
                   {i < current.steps.length - 1 && (
@@ -84,12 +84,12 @@ export function Process({ heading = "How it works", initial = "employer", showTa
                           whileInView={{ scaleX: 1 }}
                           viewport={{ once: true, margin: "-60px" }}
                           transition={{ duration: 0.7, delay: 0.3 + i * 0.25, ease: "easeOut" }}
-                          className="absolute left-14 right-[-1.5rem] top-[1.3rem] hidden origin-left border-t-2 border-dashed border-verdigris-bright/40 md:block"
+                          className="absolute left-14 right-[-1.5rem] top-[1.3rem] hidden origin-left border-t-2 border-dashed border-verdigris/40 md:block"
                       />
                   )}
-                  <SpotlightCard dark className="mt-5 p-7 text-paper">
+                  <SpotlightCard className="mt-5 p-7 text-ink">
                     <h3 className="text-xl font-semibold">{s.title}</h3>
-                    <p className="mt-3 text-[0.97rem] text-paper/65">{s.body}</p>
+                    <p className="mt-3 text-[0.97rem] text-ink/65">{s.body}</p>
                   </SpotlightCard>
                 </motion.li>
             ))}

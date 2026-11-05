@@ -1,21 +1,22 @@
 import clsx from "clsx";
 import type { ReactNode } from "react";
 
-/** A framed dark section, the same look as the hero. Content inside uses the fixed light-on-dark colours. */
+/** A full-width section band. Colours come from the theme, so light and dark match everywhere. */
 export function Panel({
                           children,
                           className,
                           labelledBy,
+                          tint = false,
                       }: {
     children: ReactNode;
     className?: string;
     labelledBy?: string;
+    /** Adds a subtle tinted background, to alternate with plain sections. */
+    tint?: boolean;
 }) {
     return (
-        <section aria-labelledby={labelledBy} className="defer p-3 sm:p-4">
-            <div className={clsx("panel-frame relative isolate overflow-hidden rounded-[1.75rem] sm:rounded-[2.25rem]", className)}>
-                {children}
-            </div>
+        <section aria-labelledby={labelledBy} className={clsx("defer relative", tint && "band-tint", className)}>
+            {children}
         </section>
     );
 }

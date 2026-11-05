@@ -31,7 +31,7 @@ export function SpotlightCard({
             ref={ref}
             onPointerMove={onMove}
             className={clsx(
-                "spotlight rounded-card transition-transform duration-300 hover:-translate-y-1",
+                "spotlight rounded-card transition-transform duration-200 hover:-translate-y-1",
                 dark ? "glass-dark" : strong ? "glass-strong" : "glass",
                 className,
             )}

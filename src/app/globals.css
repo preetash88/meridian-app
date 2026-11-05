@@ -10,24 +10,25 @@
   closing banner and footer.
 */
 :root {
-  --c-chalk: #f3f5f3;
-  --c-linen: #fbfcfb;
-  --c-ink: #0d2733;
-  --c-ink-soft: #14384a;
-  --c-slate: #4a5d69;
-  --c-line: #d8ddd9;
-  --c-verdigris: #1f6f64;
-  --c-verdigris-bright: #4cc0a8;
-  --c-mist: #e3e1f4;
-  --c-sage: #d9eadf;
+  --c-chalk: #eef4f3;
+  --c-linen: #f7fbfa;
+  --c-ink: #0a2330;
+  --c-ink-soft: #123a4d;
+  --c-slate: #4a6371;
+  --c-line: #d2e0de;
+  --c-verdigris: #0e7a6c;
+  --c-verdigris-bright: #25b59f;
+  --c-mist: #e1e6f6;
+  --c-sage: #d7ece3;
   --c-surface: #ffffff;
-  --c-surface-line: rgba(255, 255, 255, 0.8);
+  --c-surface-line: rgba(255, 255, 255, 0.85);
   --c-on-accent: #ffffff;
-  --c-night: #0d2733;
-  --c-paper: #f3f5f3;
+  --c-night: #0a2330;
+  --c-paper: #eef4f3;
+  --c-ink-fade: #3f5b69;
 
-  --glass-a: rgba(255, 255, 255, 0.74);
-  --glass-b: rgba(255, 255, 255, 0.42);
+  --glass-a: rgba(255, 255, 255, 0.8);
+  --glass-b: rgba(255, 255, 255, 0.52);
   --glass-border: rgba(255, 255, 255, 0.7);
   --glass-hi: rgba(255, 255, 255, 0.95);
   --glass-shadow: rgba(13, 39, 51, 0.28);
@@ -47,23 +48,24 @@
 }
 
 .dark {
-  --c-chalk: #08171f;
-  --c-linen: #0d212c;
-  --c-ink: #e8f1ee;
-  --c-ink-soft: #c6d8d2;
-  --c-slate: #9db2bd;
-  --c-line: #1f3a47;
-  --c-verdigris: #4cc0a8;
-  --c-verdigris-bright: #6fd8c1;
-  --c-mist: #2a2752;
-  --c-sage: #123a35;
-  --c-surface: #15303c;
-  --c-surface-line: rgba(255, 255, 255, 0.12);
-  --c-on-accent: #04211b;
-  --c-night: #0b2230;
+  --c-chalk: #040d13;
+  --c-linen: #09171f;
+  --c-ink: #e8f3f1;
+  --c-ink-soft: #c3d7d2;
+  --c-slate: #93aab6;
+  --c-line: #15303c;
+  --c-verdigris: #3fd0b4;
+  --c-verdigris-bright: #74e8d0;
+  --c-mist: #25214a;
+  --c-sage: #0f3a35;
+  --c-surface: #0a1822;
+  --c-surface-line: rgba(255, 255, 255, 0.1);
+  --c-on-accent: #03201a;
+  --c-night: #06141c;
+  --c-ink-fade: rgba(232, 243, 241, 0.66);
 
-  --glass-a: rgba(255, 255, 255, 0.085);
-  --glass-b: rgba(255, 255, 255, 0.03);
+  --glass-a: rgba(255, 255, 255, 0.075);
+  --glass-b: rgba(255, 255, 255, 0.025);
   --glass-border: rgba(255, 255, 255, 0.11);
   --glass-hi: rgba(255, 255, 255, 0.12);
   --glass-shadow: rgba(0, 0, 0, 0.55);
@@ -76,9 +78,9 @@
   --glass-fallback: rgba(16, 38, 50, 0.96);
   --halo: rgba(255, 255, 255, 0.08);
   --dot: rgba(255, 255, 255, 0.12);
-  --aurora-a: rgba(94, 76, 210, 0.42);
-  --aurora-b: rgba(24, 150, 122, 0.34);
-  --aurora-c: rgba(34, 110, 170, 0.3);
+  --aurora-a: rgba(94, 76, 210, 0.22);
+  --aurora-b: rgba(24, 150, 122, 0.2);
+  --aurora-c: rgba(34, 110, 170, 0.16);
   color-scheme: dark;
 }
 
@@ -186,14 +188,14 @@
   box-shadow:
           inset 0 1px 0 var(--glass-hi),
           0 1px 2px var(--glass-shadow-soft),
-          0 24px 48px -24px var(--glass-shadow);
+          0 14px 30px -20px var(--glass-shadow);
 }
 .glass-strong {
   background: linear-gradient(145deg, var(--glass2-a), var(--glass2-b));
   border: 1px solid var(--glass2-border);
   box-shadow:
           inset 0 1px 0 var(--glass2-hi),
-          0 30px 60px -28px var(--glass2-shadow);
+          0 18px 40px -24px var(--glass2-shadow);
 }
 .glass-dark {
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
@@ -307,18 +309,18 @@
 /* ------------------------------------------------------------------ */
 /* Framed hero: a deep gradient panel inset in the page                 */
 /* ------------------------------------------------------------------ */
-.hero-frame {
-  background:
-          radial-gradient(55% 45% at 50% 70%, rgba(45, 212, 176, 0.4), transparent 72%),
-          radial-gradient(38% 38% at 90% 4%, rgba(104, 92, 230, 0.36), transparent 70%),
-          radial-gradient(42% 42% at 4% 94%, rgba(18, 140, 120, 0.4), transparent 70%),
-          linear-gradient(180deg, #04121a 0%, #062029 52%, #08343a 100%);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.14),
-          0 40px 80px -40px rgba(4, 18, 26, 0.65);
-}
-.dark .hero-frame { border-color: rgba(255, 255, 255, 0.14); }
+/*.hero-frame {*/
+/*  background:*/
+/*          radial-gradient(55% 45% at 50% 70%, rgba(45, 212, 176, 0.4), transparent 72%),*/
+/*          radial-gradient(38% 38% at 90% 4%, rgba(104, 92, 230, 0.36), transparent 70%),*/
+/*          radial-gradient(42% 42% at 4% 94%, rgba(18, 140, 120, 0.4), transparent 70%),*/
+/*          linear-gradient(180deg, #04121a 0%, #062029 52%, #08343a 100%);*/
+/*  border: 1px solid rgba(255, 255, 255, 0.6);*/
+/*  box-shadow:*/
+/*          inset 0 1px 0 rgba(255, 255, 255, 0.14),*/
+/*          0 40px 80px -40px rgba(4, 18, 26, 0.65);*/
+/*}*/
+/*.dark .hero-frame { border-color: rgba(255, 255, 255, 0.14); }*/
 
 /* Fine film grain. One static layer, no blend modes. */
 .grain {
@@ -328,7 +330,7 @@
 }
 
 .text-fade {
-  background: linear-gradient(180deg, #ffffff 35%, rgba(255, 255, 255, 0.68));
+  background: linear-gradient(180deg, var(--c-ink) 40%, var(--c-ink-fade));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -390,14 +392,47 @@
 }
 
 /* Framed section panels, the same language as the hero */
-.panel-frame {
+/*.panel-frame {*/
+/*  background:*/
+/*          radial-gradient(50% 60% at 10% 0%, rgba(45, 212, 176, 0.22), transparent 70%),*/
+/*          radial-gradient(45% 55% at 96% 100%, rgba(104, 92, 230, 0.26), transparent 70%),*/
+/*          linear-gradient(180deg, #05161e 0%, #062029 100%);*/
+/*  border: 1px solid rgba(255, 255, 255, 0.5);*/
+/*  box-shadow:*/
+/*          inset 0 1px 0 rgba(255, 255, 255, 0.12),*/
+/*          0 40px 80px -48px rgba(4, 18, 26, 0.6);*/
+/*}*/
+/*.dark .panel-frame { border-color: rgba(255, 255, 255, 0.12); }*/
+
+/* Full-bleed hero backdrop. No frame, no box: it follows the theme. */
+.hero-sky {
   background:
-          radial-gradient(50% 60% at 10% 0%, rgba(45, 212, 176, 0.22), transparent 70%),
-          radial-gradient(45% 55% at 96% 100%, rgba(104, 92, 230, 0.26), transparent 70%),
-          linear-gradient(180deg, #05161e 0%, #062029 100%);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.12),
-          0 40px 80px -48px rgba(4, 18, 26, 0.6);
+          radial-gradient(65% 55% at 50% 82%, color-mix(in srgb, var(--c-verdigris) 24%, transparent), transparent 72%),
+          radial-gradient(42% 42% at 90% 6%, color-mix(in srgb, #6a5ce6 18%, transparent), transparent 70%),
+          linear-gradient(180deg, var(--c-chalk) 0%, color-mix(in srgb, var(--c-chalk) 88%, var(--c-verdigris) 12%) 100%);
 }
-.dark .panel-frame { border-color: rgba(255, 255, 255, 0.12); }
+
+/* Alternating section bands, the same in both themes */
+.band-tint {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--c-surface) 62%, transparent), color-mix(in srgb, var(--c-surface) 30%, transparent));
+  border-block: 1px solid var(--c-line);
+}
+
+/* On small screens, keep edge labels on screen by flipping them inward */
+@media (max-width: 640px) {
+  .globe-pill.pill-perth { --tx: 0.6rem; --ty: -50%; }
+  .globe-pill.pill-auckland,
+  .globe-pill.pill-wellington { --tx: calc(-100% - 0.6rem); --ty: -50%; }
+}
+
+/* Floating hero images */
+@keyframes hero-float {
+  0%, 100% { transform: translateY(0) rotate(-1.2deg); }
+  50% { transform: translateY(-14px) rotate(1.2deg); }
+}
+.hero-float { animation: hero-float 7s ease-in-out infinite; }
+.hero-asset-in { animation: globe-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-float, .hero-asset-in { animation: none; }
+}
+

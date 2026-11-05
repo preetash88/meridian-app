@@ -19,18 +19,18 @@ export function IndustryCarousel() {
     return (
         <Panel labelledBy="industries-heading">
             <div className="py-20 lg:py-28">
-                <div className="mx-auto flex max-w-(--container-page) flex-wrap items-end justify-between gap-6 px-6 sm:px-10">
+                <div className="mx-auto flex max-w-(--container-page) flex-wrap items-end justify-between gap-6 px-5 sm:px-8">
                     <Reveal>
                         <h2 id="industries-heading" className="text-fade text-4xl font-medium tracking-[-0.03em] sm:text-5xl">
                             One agency, every industry.
                         </h2>
-                        <p className="mt-4 max-w-xl text-[1.02rem] text-paper/65">Whatever the sector, the process and the standard of checking stay the same.</p>
+                        <p className="mt-4 max-w-xl text-[1.02rem] text-ink/65">Whatever the sector, the process and the standard of checking stay the same.</p>
                     </Reveal>
                     <div className="flex gap-2">
-                        <button type="button" onClick={() => scrollBy(-1)} aria-label="Previous industries" className="glass-dark grid h-11 w-11 place-items-center rounded-full text-paper transition-all hover:-translate-y-0.5 hover:bg-paper/15">
+                        <button type="button" onClick={() => scrollBy(-1)} aria-label="Previous industries" className="glass grid h-11 w-11 place-items-center rounded-full text-ink transition-all hover:-translate-y-0.5 hover:bg-ink/10">
                             <ArrowLeft className="h-5 w-5" aria-hidden="true" />
                         </button>
-                        <button type="button" onClick={() => scrollBy(1)} aria-label="Next industries" className="glass-dark grid h-11 w-11 place-items-center rounded-full text-paper transition-all hover:-translate-y-0.5 hover:bg-paper/15">
+                        <button type="button" onClick={() => scrollBy(1)} aria-label="Next industries" className="glass grid h-11 w-11 place-items-center rounded-full text-ink transition-all hover:-translate-y-0.5 hover:bg-ink/10">
                             <ArrowRight className="h-5 w-5" aria-hidden="true" />
                         </button>
                     </div>
@@ -39,20 +39,20 @@ export function IndustryCarousel() {
                 <ul
                     ref={scroller}
                     aria-label="Industries"
-                    className="no-scrollbar mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-6 py-4 sm:px-10 xl:px-[max(2.5rem,calc((100%-76rem)/2+2.5rem))]"
+                    className="no-scrollbar mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-5 py-4 sm:px-8 xl:px-[max(2rem,calc((100%-76rem)/2+2rem))]"
                 >
                     {INDUSTRIES.map((ind) => {
                         const Icon = ind.icon;
                         return (
                             <li key={ind.slug} className="w-[17rem] shrink-0 snap-start">
-                                <SpotlightCard dark className="h-full">
-                                    <Link href={`/get-started?type=employer&industry=${ind.slug}`} className="group flex h-full min-h-[15rem] flex-col justify-between p-6 text-paper">
+                                <SpotlightCard className="h-full">
+                                    <Link href={`/get-started?type=employer&industry=${ind.slug}`} className="group flex h-full min-h-[15rem] flex-col justify-between p-6 text-ink">
                                         <div>
-                      <span className="grid h-12 w-12 place-items-center rounded-2xl bg-verdigris-bright/15 text-verdigris-bright transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+                      <span className="grid h-12 w-12 place-items-center rounded-2xl bg-verdigris/15 text-verdigris transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
                         <Icon className="h-6 w-6" aria-hidden="true" />
                       </span>
                                             <h3 className="mt-6 text-xl font-semibold">{ind.name}</h3>
-                                            <p className="mt-2 text-[0.95rem] text-paper/60">{ind.roles}</p>
+                                            <p className="mt-2 text-[0.95rem] text-ink/60">{ind.roles}</p>
                                         </div>
                                         <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium">
                       Hire in this industry
