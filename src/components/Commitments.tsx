@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { animate, motion, useInView, useMotionValue, useTransform } from "motion/react";
 import { SITE } from "@/lib/site";
+import { Panel } from "./Panel";
 
 const ITEMS = [
   { n: 5, label: "checks on every candidate", detail: "Identity, right to work, qualifications, criminal history and role fit." },
@@ -77,40 +78,31 @@ function Ring({ segments }: { segments: number }) {
 }
 
 export function Commitments() {
-  return (
-      <section aria-labelledby="commit-heading" className="relative isolate overflow-hidden bg-night text-paper">
-        {/* Static glows behind the glass cards. No animation, so no repaint cost. */}
-        <div
-            aria-hidden="true"
-            className="absolute inset-0 -z-10"
-            style={{
-              background:
-                  "radial-gradient(40rem 26rem at 12% 0%, rgba(76,192,168,0.22), transparent 65%), radial-gradient(38rem 26rem at 95% 100%, rgba(150,140,230,0.22), transparent 65%)",
-            }}
-        />
-        <div className="mx-auto max-w-(--container-page) px-5 py-20 sm:px-8 lg:py-28">
-          <h2 id="commit-heading" className="max-w-2xl text-4xl font-semibold sm:text-5xl">
-            What you can count on, in numbers we can keep.
-          </h2>
-          <p className="mt-4 max-w-xl text-paper/65">
-            Commitments, not claims. As Meridian grows, results from real placements will sit alongside them.
-          </p>
+    return (
+        <Panel labelledBy="commit-heading">
+            <div className="mx-auto max-w-(--container-page) px-6 py-20 sm:px-10 lg:py-28">
+                <h2 id="commit-heading" className="text-fade max-w-2xl text-4xl font-medium tracking-[-0.03em] sm:text-5xl">
+                    What you can count on, in numbers we can keep.
+                </h2>
+                <p className="mt-4 max-w-xl text-paper/65">
+                    Commitments, not claims. As Meridian grows, results from real placements will sit alongside them.
+                </p>
 
-          <ul className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {ITEMS.map((it) => (
-                <li key={it.label} className="glass-dark flex flex-col items-center rounded-card p-8 text-center transition-transform duration-300 hover:-translate-y-1 sm:items-start sm:text-left">
-                  <div className="relative h-32 w-32">
-                    <Ring segments={it.n} />
-                    <span className="absolute inset-0 grid place-items-center font-display text-5xl font-semibold">
+                <ul className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                    {ITEMS.map((it) => (
+                        <li key={it.label} className="glass-dark flex flex-col items-center rounded-card p-8 text-center text-paper transition-transform duration-300 hover:-translate-y-1 sm:items-start sm:text-left">
+                            <div className="relative h-32 w-32">
+                                <Ring segments={it.n} />
+                                <span className="absolute inset-0 grid place-items-center font-display text-5xl font-semibold">
                   <CountUp to={it.n} />
                 </span>
-                  </div>
-                  <p className="mt-6 font-display text-xl font-semibold">{it.label}</p>
-                  <p className="mt-2 max-w-[16rem] text-[0.95rem] text-paper/65">{it.detail}</p>
-                </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-  );
+                            </div>
+                            <p className="mt-6 font-display text-xl font-semibold">{it.label}</p>
+                            <p className="mt-2 max-w-[16rem] text-[0.95rem] text-paper/65">{it.detail}</p>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </Panel>
+    );
 }

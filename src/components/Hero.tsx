@@ -1,183 +1,204 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
-import { Check, Clock, Layers, ShieldCheck } from "lucide-react";
-import type { PointerEvent } from "react";
+import { motion } from "motion/react";
+import { useEffect, useRef } from "react";
+import { ArrowRight, ChevronDown } from "lucide-react";
+import Link from "next/link";
 import { ButtonLink } from "./Button";
-import { MeridianArcs } from "./MeridianArcs";
-import { CHECKS, INDUSTRIES, SITE } from "@/lib/site";
+import { GlobeScene } from "./GlobeScene";
+import { HERO_SVH } from "@/lib/hero";
+import { PRICING, SITE } from "@/lib/site";
 
 const HEADLINE = "The right people, checked before you meet them.".split(" ");
 
-const FACTS = [
-  { icon: ShieldCheck, text: "Checked first" },
-  { icon: Layers, text: "Every industry" },
-  { icon: Clock, text: `Reply in ${SITE.responseTime}` },
-] as const;
+/** CSS-only helpers: the scroll position is exposed as --p (0 to 1) and each element maps it to its own animation. */
+const fadeIn = (from: number, speed: number) => `clamp(0, calc((var(--p) - ${from}) * ${speed}), 1)`;
+const fadeOut = (from: number, speed: number) => `clamp(0, calc(1 - (var(--p) - ${from}) * ${speed}), 1)`;
 
-const CHIPS = [
-  { ind: INDUSTRIES[0], pos: "right-[-2%] top-[6%]", delay: 1.7, float: "0s" },
-  { ind: INDUSTRIES[3], pos: "left-[-4%] top-[16%]", delay: 1.95, float: "-2s" },
-  { ind: INDUSTRIES[1], pos: "right-[2%] bottom-[2%]", delay: 2.2, float: "-4s" },
-] as const;
+function Offer({
+                 tag,
+                 price,
+                 unit,
+                 text,
+                 href,
+                 cta,
+                 style,
+                 className = "",
+               }: {
+  tag: string;
+  price: string;
+  unit: string;
+  text: string;
+  href: string;
+  cta: string;
+  style?: React.CSSProperties;
+  className?: string;
+}) {
+  return (
+      <div style={style} className={`glass-dark frost pointer-events-auto w-full min-w-0 max-w-[20rem] flex-1 rounded-2xl p-4 text-left text-paper sm:rounded-3xl sm:p-5 xl:flex-none ${className}`}>
+        <span className="inline-block rounded-full bg-paper/10 px-2.5 py-1 text-[0.68rem] font-medium text-verdigris-bright sm:px-3 sm:text-[0.72rem]">{tag}</span>
+        <p className="mt-3 flex items-baseline gap-2">
+          <span className="font-display text-[1.5rem] font-semibold leading-none tracking-tight sm:text-[2.4rem]">{price}</span>
+          <span className="text-[0.72rem] text-paper/65 sm:text-sm">{unit}</span>
+        </p>
+        <p className="mt-2.5 hidden text-[0.84rem] leading-relaxed text-paper/65 xl:block">{text}</p>
+        <Link href={href} className="group mt-3 inline-flex items-center gap-1.5 text-[0.85rem] font-medium text-paper xl:mt-4 xl:text-[0.88rem]">
+          {cta}
+          <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+        </Link>
+      </div>
+  );
+}
 
 export function Hero() {
-  // Pointer-driven tilt. Motion values update the transform directly, so there are no React re-renders.
-  const px = useMotionValue(0);
-  const py = useMotionValue(0);
-  const rotateX = useSpring(useTransform(py, [-0.5, 0.5], [6, -6]), { stiffness: 110, damping: 16 });
-  const rotateY = useSpring(useTransform(px, [-0.5, 0.5], [-8, 8]), { stiffness: 110, damping: 16 });
-  const arcX = useSpring(useTransform(px, [-0.5, 0.5], [-14, 14]), { stiffness: 60, damping: 20 });
-  const arcY = useSpring(useTransform(py, [-0.5, 0.5], [-14, 14]), { stiffness: 60, damping: 20 });
+  const wrap = useRef<HTMLElement>(null);
+  const stage = useRef<HTMLDivElement>(null);
+  const progress = useRef(0);
 
-  function onMove(e: PointerEvent<HTMLDivElement>) {
-    if (e.pointerType !== "mouse") return;
-    const r = e.currentTarget.getBoundingClientRect();
-    px.set((e.clientX - r.left) / r.width - 0.5);
-    py.set((e.clientY - r.top) / r.height - 0.5);
-  }
-  function onLeave() {
-    px.set(0);
-    py.set(0);
-  }
+  // Scroll position drives everything in the scene. It is written straight to a CSS variable,
+  // so scrolling never causes a React re-render.
+  useEffect(() => {
+    const el = wrap.current;
+    const st = stage.current;
+    if (!el || !st) return;
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const total = el.offsetHeight - window.innerHeight;
+      const p = Math.min(1, Math.max(0, -el.getBoundingClientRect().top / Math.max(1, total)));
+      progress.current = p;
+      st.style.setProperty("--p", p.toFixed(4));
+      st.dataset.phase = p < 0.3 ? "intro" : "story";
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
 
   return (
-      <section className="relative isolate overflow-hidden">
-        <div aria-hidden="true" className="dot-grid absolute inset-0 -z-10" />
+      <section ref={wrap} className="relative" style={{ height: `${HERO_SVH}svh` }}>
+        <div ref={stage} data-phase="intro" className="group/stage sticky top-0 h-svh p-3 sm:p-4" style={{ ["--p" as string]: 0 }}>
+          <div className="hero-frame relative isolate h-full overflow-hidden rounded-[1.75rem] sm:rounded-[2.25rem]">
+            <div aria-hidden="true" className="grain absolute inset-0 -z-10" />
 
-        <div className="mx-auto grid max-w-(--container-page) items-center gap-14 px-5 pb-20 pt-12 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-8 lg:pb-28 lg:pt-20">
-          <div>
-            <h1 aria-label={HEADLINE.join(" ")} className="text-[2.7rem] font-semibold sm:text-6xl lg:text-[4.2rem]">
-              {HEADLINE.map((w, i) => (
-                  <span key={i} aria-hidden="true" className="mr-[0.25em] inline-block overflow-hidden pb-[0.12em] align-bottom">
-                <motion.span
-                    className="inline-block"
-                    initial={{ y: "110%" }}
-                    animate={{ y: 0 }}
-                    transition={{ duration: 0.75, delay: 0.1 + i * 0.07, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  {w}
-                </motion.span>
-              </span>
-              ))}
-            </h1>
-
-            <motion.p
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.75, duration: 0.6 }}
-                className="mt-6 max-w-xl text-lg text-slate"
+            {/* The globe. It rises from below, then rolls to the centre and zooms in as you scroll. */}
+            <div
+                className="absolute left-1/2 z-10 aspect-square w-[108vmax] [--c0:1.03] [--c1:0.5]"
+                style={{
+                  top: "calc((var(--c0) + (var(--c1) - var(--c0)) * var(--p)) * 100%)",
+                  transform: "translate(-50%, -50%)",
+                }}
             >
-              {SITE.shortName} recruits across every industry in Australia. Every candidate we introduce has been identity-checked,
-              right-to-work verified, qualification-checked and assessed for the role.
-            </motion.p>
-
-            <motion.div
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.9, duration: 0.6 }}
-                className="mt-9 flex flex-wrap gap-3"
-            >
-              <ButtonLink href="/get-started?type=employer">Hire talent</ButtonLink>
-              <ButtonLink href="/get-started?type=candidate" variant="secondary">
-                Find a role
-              </ButtonLink>
-            </motion.div>
-
-            <motion.ul
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.15, duration: 0.6 }}
-                className="mt-10 flex flex-wrap gap-2.5"
-                aria-label="Highlights"
-            >
-              {FACTS.map(({ icon: Icon, text }) => (
-                  <li key={text} className="glass inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm text-ink/80">
-                    <Icon className="h-4 w-4 text-verdigris" aria-hidden="true" />
-                    {text}
-                  </li>
-              ))}
-            </motion.ul>
-          </div>
-
-          {/* The memorable moment: an example candidate card whose checks land one by one. */}
-          <div
-              onPointerMove={onMove}
-              onPointerLeave={onLeave}
-              className="relative mx-auto w-full max-w-[34rem] py-10 sm:aspect-square sm:py-0"
-          >
-            <motion.div style={{ x: arcX, y: arcY }} className="absolute inset-0">
-              <MeridianArcs className="h-full w-full" />
-            </motion.div>
-
-            {CHIPS.map(({ ind, pos, delay, float }) => {
-              const Icon = ind.icon;
-              return (
-                  <div key={ind.slug} className={`float-y absolute z-10 hidden sm:block ${pos}`} style={{ animationDelay: float }}>
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.85 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay, duration: 0.5, ease: "easeOut" }}
-                        className="glass frost flex items-center gap-2 rounded-full py-2 pl-2.5 pr-4 text-sm font-medium"
-                    >
-                  <span className="grid h-7 w-7 place-items-center rounded-full bg-sage text-verdigris">
-                    <Icon className="h-4 w-4" aria-hidden="true" />
-                  </span>
-                      {ind.name.split(" and ")[0]}
-                    </motion.div>
-                  </div>
-              );
-            })}
-
-            <motion.div
-                style={{ rotateX, rotateY, transformPerspective: 1100 }}
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.35, ease: "easeOut" }}
-                className="glass-strong frost relative rounded-card p-6 sm:absolute sm:left-[2%] sm:right-[4%] sm:top-[27%] sm:p-7"
-            >
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <p className="font-display text-xl font-semibold">Operations Manager</p>
-                  <p className="text-sm text-slate">Brisbane, QLD</p>
-                </div>
-                <span className="rounded-full bg-sage px-3 py-1 text-xs font-medium text-verdigris">Shortlisted</span>
+              {/* The entrance animation lives on an inner wrapper so it can't override the positioning transform above */}
+              <div className="globe-in h-full w-full">
+                <GlobeScene progress={progress} />
               </div>
+            </div>
 
-              <ul className="mt-5 space-y-3">
-                {CHECKS.map((c, i) => (
-                    <motion.li
-                        key={c}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.9 + i * 0.28, duration: 0.35, ease: "easeOut" }}
-                        className="flex items-center gap-3 text-[0.95rem]"
-                    >
-                      <motion.span
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          transition={{ delay: 0.95 + i * 0.28, type: "spring", stiffness: 500, damping: 18 }}
-                          className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-verdigris text-on-accent"
-                      >
-                        <Check className="h-3 w-3" strokeWidth={3} aria-hidden="true" />
-                      </motion.span>
-                      {c}
-                    </motion.li>
+            {/* Scene 1: the promise */}
+            <div
+                className="pointer-events-none absolute inset-x-0 top-0 z-20 mx-auto flex w-full max-w-5xl flex-col items-center px-6 pt-28 text-center group-data-[phase=intro]/stage:pointer-events-auto sm:pt-32 lg:pt-[6.5rem]"
+                style={{ opacity: fadeOut(0.06, 4.5), transform: "translate3d(0, calc(var(--p) * -70px), 0)" }}
+            >
+              <h1
+                  aria-label={HEADLINE.join(" ")}
+                  className="text-[2.5rem] font-medium leading-[1.05] tracking-[-0.035em] sm:text-[3.4rem] lg:text-[3.9rem]"
+              >
+                {HEADLINE.map((w, i) => (
+                    <span key={i} aria-hidden="true" className="mr-[0.24em] inline-block overflow-hidden pb-[0.1em] align-bottom">
+                  <motion.span
+                      className="text-fade inline-block"
+                      initial={{ y: "115%" }}
+                      animate={{ y: 0 }}
+                      transition={{ duration: 0.8, delay: 0.1 + i * 0.07, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    {w}
+                  </motion.span>
+                </span>
                 ))}
-              </ul>
-              <p className="mt-5 border-t border-ink/10 pt-3 text-xs text-slate">Example candidate card. Not a real person.</p>
-            </motion.div>
+              </h1>
 
-            <div className="float-y absolute -bottom-3 left-[-2%] z-10 hidden sm:block" style={{ animationDelay: "-1s" }}>
+              <motion.p
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.75, duration: 0.6 }}
+                  className="mt-5 max-w-xl text-[1rem] leading-relaxed text-paper/70 sm:text-[1.05rem]"
+              >
+                {SITE.shortName} recruits across every industry in Australia and New Zealand. Every candidate we introduce is
+                identity-checked, right-to-work verified and assessed for the role.
+              </motion.p>
+
               <motion.div
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 2.4, duration: 0.5, ease: "easeOut" }}
-                  className="glass frost rounded-tile px-4 py-3 text-sm"
+                  transition={{ delay: 0.9, duration: 0.6 }}
+                  className="mt-7 flex flex-wrap items-center justify-center gap-3"
               >
-                <p className="font-medium">Brief received</p>
-                <p className="text-slate">We reply within {SITE.responseTime}.</p>
+                <ButtonLink href="/get-started?type=employer" variant="light" className="!px-7 !py-3.5">
+                  Start hiring today
+                </ButtonLink>
+                <ButtonLink href="/get-started?type=candidate" variant="ghost-light" className="!px-7 !py-3.5">
+                  Find a role
+                </ButtonLink>
               </motion.div>
+            </div>
+
+            {/* Soft shade behind scene 2 so the headline stays readable over the map */}
+            <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 top-0 z-[15] h-56 bg-gradient-to-b from-[#04121a]/75 via-[#04121a]/35 to-transparent"
+                style={{ opacity: fadeIn(0.2, 4) }}
+            />
+
+            {/* Scene 2: where we work */}
+            <div
+                className="pointer-events-none absolute inset-x-0 top-0 z-20 mx-auto flex max-w-3xl flex-col items-center px-6 pt-28 text-center sm:pt-32"
+                style={{ opacity: fadeIn(0.22, 5), transform: "translate3d(0, calc((1 - clamp(0, (var(--p) - 0.22) * 5, 1)) * 30px), 0)" }}
+            >
+              <h2 className="text-fade text-[2rem] font-medium leading-[1.08] tracking-[-0.03em] sm:text-5xl">Every state. Every industry.</h2>
+              <p className="mt-3 max-w-md text-[0.98rem] text-paper/70">From Perth to Auckland, one consultant runs your search from brief to offer.</p>
+            </div>
+
+            {/* Scene 3: the offers */}
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 flex flex-row items-stretch justify-center gap-2.5 p-3 sm:gap-3 sm:p-6 xl:inset-0 xl:block xl:p-0">
+              <Offer
+                  tag="For employers"
+                  price={PRICING.employer.price}
+                  unit={PRICING.employer.unit}
+                  text="Search, five checks and a role-fit assessment included. One flat fee, nothing hidden."
+                  href="/get-started?type=employer"
+                  cta="Start hiring"
+                  className="xl:absolute xl:bottom-[3%] xl:left-[3.5%]"
+                  style={{ opacity: fadeIn(0.5, 6), transform: "translate3d(calc((1 - clamp(0, (var(--p) - 0.5) * 6, 1)) * -50px), 0, 0)" }}
+              />
+              <Offer
+                  tag="For job seekers"
+                  price={PRICING.candidate.price}
+                  unit={PRICING.candidate.unit}
+                  text="Resume, LinkedIn and skills guidance to get you noticed. Support, not a placement promise."
+                  href="/get-started?type=candidate"
+                  cta="Get started"
+                  className="xl:absolute xl:right-[3.5%] xl:top-[24%]"
+                  style={{ opacity: fadeIn(0.62, 6), transform: "translate3d(calc((1 - clamp(0, (var(--p) - 0.62) * 6, 1)) * 50px), 0, 0)" }}
+              />
+            </div>
+
+            {/* Scroll hint */}
+            <div
+                aria-hidden="true"
+                className="pointer-events-none absolute bottom-5 left-6 z-20 flex flex-col items-start gap-1 text-[0.72rem] font-medium tracking-wide text-paper/60 sm:left-8"
+                style={{ opacity: fadeOut(0, 8) }}
+            >
+              Scroll to explore
+              <ChevronDown className="h-4 w-4 animate-bounce" />
             </div>
           </div>
         </div>

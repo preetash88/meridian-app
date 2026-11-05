@@ -8,10 +8,13 @@ export function SpotlightCard({
                                   children,
                                   className,
                                   strong = false,
+                                  dark = false,
                               }: {
     children: ReactNode;
     className?: string;
     strong?: boolean;
+    /** Light-on-dark glass, for use inside the dark panels. */
+    dark?: boolean;
 }) {
     const ref = useRef<HTMLDivElement>(null);
 
@@ -27,7 +30,11 @@ export function SpotlightCard({
         <div
             ref={ref}
             onPointerMove={onMove}
-            className={clsx("spotlight rounded-card transition-transform duration-300 hover:-translate-y-1", strong ? "glass-strong" : "glass", className)}
+            className={clsx(
+                "spotlight rounded-card transition-transform duration-300 hover:-translate-y-1",
+                dark ? "glass-dark" : strong ? "glass-strong" : "glass",
+                className,
+            )}
         >
             {children}
         </div>

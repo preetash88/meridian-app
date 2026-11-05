@@ -6,6 +6,7 @@ import {Footer} from "@/components/Footer";
 import {Providers} from "@/components/Providers";
 import {SITE} from "@/lib/site";
 import {ScrollProgress} from "@/components/ScrollProgress";
+import { MainShell } from "@/components/MainShell";
 
 const display = localFont({
     src: "./fonts/bricolage.woff2",
@@ -76,7 +77,7 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
         <Providers>
             <ScrollProgress/>
             <Header/>
-            <main id="main">{children}</main>
+            <MainShell>{children}</MainShell>
             <Footer/>
         </Providers>
         </body>

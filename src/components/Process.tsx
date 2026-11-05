@@ -3,6 +3,7 @@
 import { useState } from "react";
 import clsx from "clsx";
 import { motion } from "motion/react";
+import { Panel } from "./Panel";
 import { SpotlightCard } from "./SpotlightCard";
 
 const FLOWS = {
@@ -31,65 +32,69 @@ export function Process({ heading = "How it works", initial = "employer", showTa
   const current = FLOWS[flow];
 
   return (
-      <section aria-labelledby="process-heading" className="defer mx-auto max-w-(--container-page) px-5 py-20 sm:px-8 lg:py-28">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <h2 id="process-heading" className="text-4xl font-semibold sm:text-5xl">{heading}</h2>
+      <Panel labelledBy="process-heading">
+        <div className="mx-auto max-w-(--container-page) px-6 py-20 sm:px-10 lg:py-28">
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <h2 id="process-heading" className="text-fade text-4xl font-medium tracking-[-0.03em] sm:text-5xl">
+              {heading}
+            </h2>
 
-          {showTabs && (
-              <div role="tablist" aria-label="Choose a path" className="glass relative inline-flex rounded-full p-1">
-                {(Object.keys(FLOWS) as FlowKey[]).map((k) => (
-                    <button
-                        key={k}
-                        role="tab"
-                        id={`tab-${k}`}
-                        aria-selected={flow === k}
-                        aria-controls="process-panel"
-                        onClick={() => setFlow(k)}
-                        className={clsx(
-                            "relative z-10 rounded-full px-5 py-2 text-[0.95rem] font-medium transition-colors",
-                            flow === k ? "text-chalk" : "text-slate hover:text-ink",
+            {showTabs && (
+                <div role="tablist" aria-label="Choose a path" className="glass-dark relative inline-flex rounded-full p-1">
+                  {(Object.keys(FLOWS) as FlowKey[]).map((k) => (
+                      <button
+                          key={k}
+                          role="tab"
+                          id={`tab-${k}`}
+                          aria-selected={flow === k}
+                          aria-controls="process-panel"
+                          onClick={() => setFlow(k)}
+                          className={clsx(
+                              "relative z-10 rounded-full px-5 py-2 text-[0.95rem] font-medium transition-colors",
+                              flow === k ? "text-night" : "text-paper/70 hover:text-paper",
+                          )}
+                      >
+                        {flow === k && (
+                            <motion.span layoutId="process-pill" className="absolute inset-0 -z-10 rounded-full bg-paper" transition={{ type: "spring", stiffness: 420, damping: 36 }} />
                         )}
-                    >
-                      {flow === k && (
-                          <motion.span layoutId="process-pill" className="absolute inset-0 -z-10 rounded-full bg-ink shadow-md" transition={{ type: "spring", stiffness: 420, damping: 36 }} />
-                      )}
-                      {FLOWS[k].label}
-                    </button>
-                ))}
-              </div>
-          )}
-        </div>
+                        {FLOWS[k].label}
+                      </button>
+                  ))}
+                </div>
+            )}
+          </div>
 
-        <ol id="process-panel" role="tabpanel" aria-labelledby={`tab-${flow}`} className="mt-14 grid gap-10 md:grid-cols-3 md:gap-6">
-          {current.steps.map((s, i) => (
-              <motion.li
-                  key={`${flow}-${s.title}`}
-                  initial={{ opacity: 0, y: 18 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-60px" }}
-                  transition={{ duration: 0.55, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
-                  className="relative"
-              >
-            <span className="relative z-10 grid h-11 w-11 place-items-center rounded-full bg-ink font-display text-lg font-semibold text-chalk shadow-[0_0_0_6px_var(--halo)]">
-              {i + 1}
-            </span>
-                {i < current.steps.length - 1 && (
-                    <motion.span
-                        aria-hidden="true"
-                        initial={{ scaleX: 0 }}
-                        whileInView={{ scaleX: 1 }}
-                        viewport={{ once: true, margin: "-60px" }}
-                        transition={{ duration: 0.7, delay: 0.3 + i * 0.25, ease: "easeOut" }}
-                        className="absolute left-14 right-[-1.5rem] top-[1.3rem] hidden origin-left border-t-2 border-dashed border-verdigris/50 md:block"
-                    />
-                )}
-                <SpotlightCard className="mt-5 p-7">
-                  <h3 className="text-xl font-semibold">{s.title}</h3>
-                  <p className="mt-3 text-[0.97rem] text-slate">{s.body}</p>
-                </SpotlightCard>
-              </motion.li>
-          ))}
-        </ol>
-      </section>
+          <ol id="process-panel" role="tabpanel" aria-labelledby={`tab-${flow}`} className="mt-14 grid gap-10 md:grid-cols-3 md:gap-6">
+            {current.steps.map((s, i) => (
+                <motion.li
+                    key={`${flow}-${s.title}`}
+                    initial={{ opacity: 0, y: 18 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-60px" }}
+                    transition={{ duration: 0.55, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
+                    className="relative"
+                >
+              <span className="relative z-10 grid h-11 w-11 place-items-center rounded-full bg-paper font-display text-lg font-semibold text-night shadow-[0_0_0_6px_rgba(255,255,255,0.08)]">
+                {i + 1}
+              </span>
+                  {i < current.steps.length - 1 && (
+                      <motion.span
+                          aria-hidden="true"
+                          initial={{ scaleX: 0 }}
+                          whileInView={{ scaleX: 1 }}
+                          viewport={{ once: true, margin: "-60px" }}
+                          transition={{ duration: 0.7, delay: 0.3 + i * 0.25, ease: "easeOut" }}
+                          className="absolute left-14 right-[-1.5rem] top-[1.3rem] hidden origin-left border-t-2 border-dashed border-verdigris-bright/40 md:block"
+                      />
+                  )}
+                  <SpotlightCard dark className="mt-5 p-7 text-paper">
+                    <h3 className="text-xl font-semibold">{s.title}</h3>
+                    <p className="mt-3 text-[0.97rem] text-paper/65">{s.body}</p>
+                  </SpotlightCard>
+                </motion.li>
+            ))}
+          </ol>
+        </div>
+      </Panel>
   );
 }

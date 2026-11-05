@@ -5,7 +5,7 @@ import { Moon, Sun } from "lucide-react";
 
 const STORAGE_KEY = "theme";
 
-export function ThemeToggle({ className = "" }: { className?: string }) {
+export function ThemeToggle({ className = "", onDark = false }: { className?: string; onDark?: boolean }) {
     // null until mounted, so server and first client render match
     const [dark, setDark] = useState<boolean | null>(null);
 
@@ -50,7 +50,7 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
             onClick={toggle}
             aria-label={label}
             aria-pressed={dark ?? undefined}
-            className={`grid h-10 w-10 place-items-center rounded-full text-ink transition-colors hover:bg-ink/10 ${className}`}
+            className={`grid h-10 w-10 place-items-center rounded-full ${onDark ? "text-paper hover:bg-paper/15" : "text-ink hover:bg-ink/10"} transition-colors ${className}`}
         >
             {/* Both icons are in the HTML; CSS shows the right one, so there is no flash or mismatch */}
             <Sun className="hidden h-5 w-5 dark:block" aria-hidden="true" />
