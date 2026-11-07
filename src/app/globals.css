@@ -113,7 +113,7 @@
   html {
     background: var(--color-chalk);
     color: var(--color-ink);
-    scroll-behavior: smooth;
+    /*scroll-behavior: smooth;*/
     -webkit-text-size-adjust: 100%;
   }
   body {
@@ -436,3 +436,12 @@
   .hero-float, .hero-asset-in { animation: none; }
 }
 
+/* Employer page character: a slow idle float */
+@keyframes pose-idle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.pose-idle { animation: pose-idle 6s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .pose-idle { animation: none; }
+}

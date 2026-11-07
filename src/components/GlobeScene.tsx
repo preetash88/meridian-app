@@ -12,7 +12,7 @@ export function GlobeScene({ progress }: { progress?: { current: number } }) {
     const [webgl, setWebgl] = useState(true);
     if (webgl) return <WebGLGlobe className="absolute inset-0" progress={progress} onUnsupported={() => setWebgl(false)} />;
     return (
-        <div className="absolute inset-0 flex items-end justify-center overflow-hidden [filter:invert(1)_hue-rotate(180deg)] dark:[filter:none]">
+        <div className="absolute inset-0 flex items-end justify-center overflow-hidden dark:[filter:none]">
             <NetworkGlobe className="w-[min(110vw,60rem)] translate-y-[46%]" />
         </div>
     );

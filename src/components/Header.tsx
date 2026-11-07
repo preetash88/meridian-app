@@ -8,7 +8,6 @@ import { motion } from "motion/react";
 import { Menu, X } from "lucide-react";
 import { Logo } from "./Logo";
 import { ButtonLink } from "./Button";
-import { ThemeToggle } from "./ThemeToggle";
 import { NAV_LINKS } from "@/lib/site";
 
 const LINKS = [{ label: "Home", href: "/" }, ...NAV_LINKS];
@@ -75,7 +74,6 @@ export function Header() {
                 </nav>
 
                 <div className="flex items-center justify-end gap-1.5">
-                    <ThemeToggle />
                     {/* wrapped so "hidden" isn't overridden by the button's own display class */}
                     <div className="hidden lg:block">
                         <ButtonLink href="/login" variant="secondary" className="!px-5 !py-2.5">

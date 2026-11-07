@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
     themeColor: [
-        {media: "(prefers-color-scheme: light)", color: "#f3f5f3"},
+        // {media: "(prefers-color-scheme: light)", color: "#f3f5f3"},
         {media: "(prefers-color-scheme: dark)", color: "#08171f"},
     ],
     width: "device-width",
@@ -42,7 +42,7 @@ export const viewport: Viewport = {
 };
 
 // Runs before first paint so the page never flashes the wrong theme.
-const themeInit = `(function(){try{var t=localStorage.getItem("theme");var d=t?t==="dark":window.matchMedia("(prefers-color-scheme: dark)").matches;if(d)document.documentElement.classList.add("dark")}catch(e){}})();`;
+// const themeInit = `(function(){try{var t=localStorage.getItem("theme");var d=t?t==="dark":window.matchMedia("(prefers-color-scheme: dark)").matches;if(d)document.documentElement.classList.add("dark")}catch(e){}})();`;
 
 const jsonLd = {
     "@context": "https://schema.org",
@@ -56,10 +56,10 @@ const jsonLd = {
 
 export default function RootLayout({children}: { children: React.ReactNode }) {
     return (
-        <html lang="en-AU" className={`${display.variable} ${body.variable}`} suppressHydrationWarning>
-        <head>
-            <script dangerouslySetInnerHTML={{__html: themeInit}}/>
-        </head>
+        <html lang="en-AU" data-scroll-behavior="smooth" className={`${display.variable} ${body.variable} dark`} suppressHydrationWarning>
+        {/*<head>*/}
+        {/*    /!*<script dangerouslySetInnerHTML={{__html: themeInit}}/>*!/*/}
+        {/*</head>*/}
         <body>
         <script type="application/ld+json"
                 dangerouslySetInnerHTML={{__html: JSON.stringify(jsonLd).replace(/</g, "\\u003c")}}/>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
+import { TrackingPortrait } from "@/components/TrackingPortrait";
 import { ButtonLink } from "@/components/Button";
 import { PriceCard } from "@/components/PriceCard";
 import { Process } from "@/components/Process";
@@ -20,6 +21,14 @@ export default function Employers() {
             <PageHero
                 title="Hire people who have already cleared the checks."
                 intro="One consultant runs your search from brief to offer. You meet a shortlist that has been verified and assessed for the role, not a stack of unchecked resumes."
+                aside={
+                    <TrackingPortrait
+                        dir="/employer/frames"
+                        count={63}
+                        turnEnd={38}
+                        label="Your Meridian consultant, who looks towards your cursor"
+                    />
+                }
             >
                 <ButtonLink href="/get-started?type=employer">Send a brief</ButtonLink>
             </PageHero>

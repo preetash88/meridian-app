@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import {useEffect, useRef} from "react";
 
 export type HeroAsset = {
     src: string;
@@ -42,15 +42,15 @@ export const HERO_ASSETS: HeroAsset[] = [
 
 export function HeroAssets() {
     const ref = useRef<HTMLDivElement>(null);
-    const [dark, setDark] = useState(true);
-
-    useEffect(() => {
-        const sync = () => setDark(document.documentElement.classList.contains("dark"));
-        sync();
-        const mo = new MutationObserver(sync);
-        mo.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
-        return () => mo.disconnect();
-    }, []);
+    // const [dark, setDark] = useState(true);
+    //
+    // useEffect(() => {
+    //     const sync = () => setDark(document.documentElement.classList.contains("dark"));
+    //     sync();
+    //     const mo = new MutationObserver(sync);
+    //     mo.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    //     return () => mo.disconnect();
+    // }, []);
 
     useEffect(() => {
         const el = ref.current;
@@ -68,7 +68,7 @@ export function HeroAssets() {
                     el.style.setProperty("--my", y.toFixed(3));
                 });
         };
-        window.addEventListener("pointermove", onMove, { passive: true });
+        window.addEventListener("pointermove", onMove, {passive: true});
         return () => {
             window.removeEventListener("pointermove", onMove);
             cancelAnimationFrame(raf);
@@ -82,7 +82,7 @@ export function HeroAssets() {
             ref={ref}
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 z-[12] hidden lg:block"
-            style={{ opacity: "clamp(0, calc(1 - var(--p) * 6), 1)" }}
+            style={{opacity: "clamp(0, calc(1 - var(--p) * 6), 1)"}}
         >
             {HERO_ASSETS.map((a, i) => {
                 const d = a.depth ?? 1;
@@ -93,14 +93,14 @@ export function HeroAssets() {
                         style={{
                             top: a.top,
                             width: a.size,
-                            ...(a.side === "left" ? { left: "6%" } : { right: "6%" }),
+                            ...(a.side === "left" ? {left: "6%"} : {right: "6%"}),
                             transform: `translate3d(calc(var(--mx, 0) * ${-28 * d}px), calc(var(--my, 0) * ${-20 * d}px + var(--p) * -140px), 0)`,
                         }}
                     >
-                        <div className="hero-asset-in" style={{ animationDelay: `${0.5 + i * 0.15}s` }}>
-                            <div className="hero-float" style={{ animationDelay: `${i * 1.1}s` }}>
+                        <div className="hero-asset-in" style={{animationDelay: `${0.5 + i * 0.15}s`}}>
+                            <div className="hero-float" style={{animationDelay: `${i * 1.1}s`}}>
                                 <Image
-                                    src={dark ? a.src : a.srcLight}
+                                    src={a.src}
                                     alt={a.alt}
                                     width={a.width}
                                     height={a.height}
